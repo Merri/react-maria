@@ -95,7 +95,9 @@ class OverlayProvider extends React.PureComponent {
                     type="checkbox"
                     value={currentOverlayId}
                 />
-                {typeof this.props.children === 'function' ? this.props.children(this.value) : this.props.children}
+                {typeof this.props.children === 'function'
+                    ? this.props.children({ ...this.value })
+                    : this.props.children}
             </OverlayContext.Provider>
         )
     }
