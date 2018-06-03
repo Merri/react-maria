@@ -85,7 +85,7 @@ class OverlayProvider extends React.PureComponent {
         }
 
         return (
-            <OverlayContext.Provider value={this.value}>
+            <OverlayContext value={this.value}>
                 <input
                     checked={currentOverlayId != null}
                     id={id}
@@ -98,7 +98,7 @@ class OverlayProvider extends React.PureComponent {
                 {typeof this.props.children === 'function'
                     ? this.props.children({ ...this.value })
                     : this.props.children}
-            </OverlayContext.Provider>
+            </OverlayContext>
         )
     }
 }

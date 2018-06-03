@@ -27,7 +27,6 @@ export default withUniqueId(MyComponent, 'my-component')
 ### Overlays: for dialogs, dropdowns, popups, tooltips...
 - `Overlay`: for any component that pops on top of regular content, be it list dropdown or full screen modal dialog
 - `OverlayProvider`: required for overlays to function, multi-overlay management
-- `OverlayContext`: for creating customized replacements of `OverlayProvider` and `withOverlay`
 - `withOverlay`: HOC that handles `freezeScroll` and `id` props, manages communication to `OverlayProvider`
 
 ### Todo thoughts

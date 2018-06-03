@@ -76,4 +76,4 @@ export function withOverlay(Component, identifier = 'overlay') {
     )
 }
 
-export default OverlayContext
+export default OverlayContext.Provider
