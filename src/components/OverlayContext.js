@@ -22,10 +22,12 @@ export function withOverlay(Component, identifier = 'overlay') {
             freezeScroll: false,
         }
 
+        state = {}
+
         static getDerivedStateFromProps(props, state) {
             const id = getProp(props.id, props.uniqueId)
 
-            if (!state || state.id !== id || props.freezeScroll !== state.freezeScroll) {
+            if (state.id !== id || props.freezeScroll !== state.freezeScroll) {
                 return { freezeScroll: props.freezeScroll, id }
             }
 

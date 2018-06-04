@@ -6,7 +6,7 @@ import { withOverlay } from './OverlayContext'
 
 class Overlay extends React.PureComponent {
     static propTypes = {
-        children: PropTypes.node,
+        children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         component: PropTypes.any,
         getIndexById: PropTypes.func.isRequired,
         id: PropTypes.string,

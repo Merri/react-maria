@@ -10,7 +10,7 @@ import { withUniqueId } from './UniqueId'
 
 class OverlayProvider extends React.PureComponent {
     static propTypes = {
-        children: PropTypes.node,
+        children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         id: PropTypes.string,
         initialOverlayId: PropTypes.string,
         name: PropTypes.string,
@@ -25,7 +25,7 @@ class OverlayProvider extends React.PureComponent {
     scrollFreezes = []
 
     state = {
-        currentOverlayId: getProp(this.props.initialOverlayId, null),
+        currentOverlayId: getProp(this.props.initialOverlayId, ''),
     }
 
     value = {
@@ -36,7 +36,7 @@ class OverlayProvider extends React.PureComponent {
                 this.overlays.splice(index, 1)
                 this.onClose(overlayId)
                 this.setState({
-                    currentOverlayId: this.overlays.length ? this.overlays[this.overlays.length - 1] : null,
+                    currentOverlayId: this.overlays.length ? this.overlays[this.overlays.length - 1] : '',
                 })
                 const freezeIndex = this.scrollFreezes.indexOf(overlayId)
 
@@ -87,7 +87,7 @@ class OverlayProvider extends React.PureComponent {
         return (
             <OverlayContext value={this.value}>
                 <input
-                    checked={currentOverlayId != null}
+                    checked={currentOverlayId !== ''}
                     id={id}
                     name={name}
                     onChange={this.props.onChange}
