@@ -1,8 +1,7 @@
 node_modules
 npm-debug.log*
 yarn-error.log
-lib
-!/src/lib/**
+/lib
 coverage
 docs/static
 docs/favicon*
