@@ -8,6 +8,7 @@ class Overlay extends React.PureComponent {
     static propTypes = {
         children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         component: PropTypes.any,
+        currentOverlayId: PropTypes.string.isRequired,
         getIndexById: PropTypes.func.isRequired,
         id: PropTypes.string,
         isOpenById: PropTypes.func.isRequired,
@@ -15,6 +16,8 @@ class Overlay extends React.PureComponent {
         noCloseOnEscKey: PropTypes.bool,
         noFocusRestore: PropTypes.bool,
         onRequestClose: PropTypes.func,
+        providerId: PropTypes.string.isRequired,
+        providerName: PropTypes.string.isRequired,
         role: PropTypes.oneOf(['alert', 'listbox', 'menu', 'modal', 'popover', 'tooltip']),
         scopeFocus: PropTypes.bool,
     }
@@ -83,12 +86,15 @@ class Overlay extends React.PureComponent {
         const {
             children,
             component,
+            currentOverlayId,
             getIndexById,
             isOpenById,
             noCloseOnBodyClick,
             noCloseOnEscKey,
             noFocusRestore,
             onRequestClose,
+            providerId,
+            providerName,
             scopeFocus,
             ...props
         } = this.props

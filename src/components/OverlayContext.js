@@ -15,6 +15,8 @@ export function withOverlay(Component, identifier = 'overlay') {
             id: PropTypes.string,
             onRequestClose: PropTypes.func,
             openById: PropTypes.func.isRequired,
+            providerId: PropTypes.string.isRequired,
+            providerName: PropTypes.string.isRequired,
             uniqueId: PropTypes.string.isRequired,
         }
 

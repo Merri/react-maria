@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import noScroll from 'no-scroll'
 
-import { getProp } from '../lib/utils'
+import { getProp, noop } from '../lib/utils'
 import { hidden } from '../lib/styles'
 
 import OverlayContext from './OverlayContext'
@@ -21,6 +21,11 @@ class OverlayProvider extends React.PureComponent {
         uniqueId: PropTypes.string.isRequired,
     }
 
+    static defaultProps = {
+        onClose: noop,
+        onOpen: noop,
+    }
+
     overlays = this.props.initialOverlayId ? [this.props.initialOverlayId] : []
     scrollFreezes = []
 
@@ -34,7 +39,7 @@ class OverlayProvider extends React.PureComponent {
 
             if (index !== -1) {
                 this.overlays.splice(index, 1)
-                this.onClose(overlayId)
+                this.props.onClose(overlayId)
                 this.setState({
                     currentOverlayId: this.overlays.length ? this.overlays[this.overlays.length - 1] : '',
                 })
@@ -56,7 +61,7 @@ class OverlayProvider extends React.PureComponent {
 
             if (index === -1) {
                 this.overlays.push(overlayId)
-                this.onOpen(overlayId)
+                this.props.onOpen(overlayId)
 
                 if (freezeScroll) {
                     if (this.scrollFreezes.length === 0) {
@@ -80,8 +85,12 @@ class OverlayProvider extends React.PureComponent {
         /**
          * Change object reference only if there are actual changes.
          */
-        if (this.value.currentOverlayId !== currentOverlayId || this.value.id !== id || this.value.name !== name) {
-            this.value = { ...this.value, currentOverlayId, id, name }
+        if (
+            this.value.currentOverlayId !== currentOverlayId ||
+            this.value.providerId !== id ||
+            this.value.providerName !== name
+        ) {
+            this.value = { ...this.value, currentOverlayId, providerId: id, providerName: name }
         }
 
         return (
