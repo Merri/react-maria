@@ -7,6 +7,24 @@ avoiding problems like the universal rendering issue that exist in other similar
 
 These components will be built on top of the latest and greatest features in React, requiring React 16.4 or later.
 
+----
+
+
+## Current stable features
+
+There features are complete and *should* be safe to use in production:
+
+- Unique IDs
+
+
+## Current unstable features
+
+These features have not been tested properly or have issues that need to be fixed.
+
+- Overlays
+
+----
+
 
 ## Unique ID management for universal rendering
 
