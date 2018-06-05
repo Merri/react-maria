@@ -1,7 +1,7 @@
 {
   "name": "react-maria",
-  "description": "ARIA state management and components for React",
-  "version": "0.0.3",
+  "description": "Unique IDs, ARIA state management and components for React",
+  "version": "0.0.4",
   "author": "Vesa Piittinen <vesa.piittinen@gmail.com>",
   "bugs": {
     "url": "https://github.com/merri/react-maria/issues"
@@ -47,13 +47,13 @@
   "keywords": [
     "react",
     "react-aria",
+    "uniqueid",
+    "unique-id",
+    "react-unique-id",
     "a11y",
     "ARIA",
-    "accordion",
-    "tabs",
-    "option",
     "overlay",
-    "select"
+    "modal"
   ],
   "license": "MIT",
   "lint-staged": {
