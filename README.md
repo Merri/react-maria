@@ -10,7 +10,8 @@ These components will be built on top of the latest and greatest features in Rea
 
 ## Unique ID management for universal rendering
 
-These tools allow making components that have no render conflicts between server and client.
+These utilities allow making components that have no render conflicts between server and client, making it possible to
+have unique id attributes in your rendered DOM elements.
 
 - `clearUniqueIds`: call before rendering static markup on server side to ensure client will use same uniqueIds
 - `registerUniqueId` and `unregisterUniqueId`: if you want a custom `withUniqueId` implementation
@@ -22,7 +23,10 @@ These tools allow making components that have no render conflicts between server
 export default withUniqueId(MyComponent, 'my-component')
 ```
 
-### Why Maria implements this feature?
+It is recommended that you do **not** use numbers in your manually written id attributes to avoid any possible chance
+for a conflict. The generated unique ids end with a number.
+
+### Why Maria implements `withUniqueId`?
 
 React does not provide anything for this issue, see [RFC #32: isomorphic IDs](https://github.com/reactjs/rfcs/pull/32).
 There are other solutions to this problem, but...
@@ -43,7 +47,8 @@ There are other solutions to this problem, but...
 
 - [`@xo-union/react-unique-id`](https://www.npmjs.com/package/@xo-union/react-unique-id)
 
-And the remaining solutions that can be found have clearly not spent time to think about the problem.
+And the remaining solutions that can be found have clearly not spent time to think about the problem or the
+implementation is based on outdated React features (like mixins).
 
 
 ## Components
