@@ -97,11 +97,13 @@ export function withUniqueId(options) {
                 for (let j = 0; j < keys.length; j++) {
                     const key = keys[j]
 
-                    for (let i = 0; i < this.nextIds[key].length; i++) {
-                        unregisterUniqueId(this.nextIds[key][i])
+                    if (this.nextIds[key].length === 0) {
+                        delete this.nextIds[key]
+                    } else {
+                        while (this.nextIds[key].length) {
+                            unregisterUniqueId(this.nextIds[key].pop())
+                        }
                     }
-
-                    this.nextIds[key].length = 0
                 }
 
                 return this.generator
