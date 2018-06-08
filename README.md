@@ -72,9 +72,9 @@ implementation is based on outdated React features (like mixins).
 ## Components
 
 ### Overlays: for dialogs, dropdowns, popups, tooltips...
-- `Overlay`: for any component that pops on top of regular content, be it list dropdown or full screen modal dialog
-- `OverlayProvider`: required for overlays to function, multi-overlay management
-- `withOverlay`: HOC that handles `freezeScroll` and `id` props, manages communication to `OverlayProvider`
+- `Modal`: for any component that pops on top of regular content, be it list dropdown or full screen modal dialog
+- `ModalOverlay`: required for modals to function, multi-modal management
+- `withOverlay`: HoC that handles `freezeScroll` and `id` props, manages communication to `ModalOverlay`
 
 ### Todo thoughts
 - `Accordion`

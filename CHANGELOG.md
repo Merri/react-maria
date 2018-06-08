@@ -5,6 +5,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [unreleased]
+
+### Changed
+
+- `Overlay` is now `Modal`
+- `OverlayProvider` is now `ModalOverlay`
+- `OverlayContext` is now `Overlay`
+- `withUniqueId` HoC now takes options object with keys `identifier` and `includeGenerator`
+- `withOverlay` HoC now takes options object that is passes to `withUniqueId`
+- Components passed to `withUniqueId` can now have `uniqueId` prop, which is used instead of `identifier` when given
+
+### Added
+
+- `uniqueIdGen` prop which will be available if `includeGenerator: true` is passed in `withUniqueId` options; `last` and
+  `next` methods are included to returned object from `uniqueIdGen()`
+- tests for Unique IDs
+
+### Fixed
+
+- Pressing escape or clicking body no longer removes `currentModalId`: only modal actually unmounting will do that
+
+
 ## [0.0.4] - 2018-06-05
 
 ### Changed

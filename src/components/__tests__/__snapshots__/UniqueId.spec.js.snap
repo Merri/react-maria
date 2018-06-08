@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 1`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 2`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 3`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 4`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 5`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 6`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 7`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
+
+exports[`withUniqueId throws when identifier is not HTML4 specced id string 8`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;

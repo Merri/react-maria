@@ -1,110 +1,85 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { scopeFocus as scope, unscopeFocus as unscope } from 'a11y-focus-scope'
 
-import { withOverlay } from './OverlayContext'
+import { getProp } from '../lib/utils'
+import { withUniqueId } from './UniqueId'
 
-class Overlay extends React.PureComponent {
-    static propTypes = {
-        children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-        component: PropTypes.any,
-        currentOverlayId: PropTypes.string.isRequired,
-        getIndexById: PropTypes.func.isRequired,
-        id: PropTypes.string,
-        isOpenById: PropTypes.func.isRequired,
-        noCloseOnBodyClick: PropTypes.bool,
-        noCloseOnEscKey: PropTypes.bool,
-        noFocusRestore: PropTypes.bool,
-        onRequestClose: PropTypes.func,
-        providerId: PropTypes.string.isRequired,
-        providerName: PropTypes.string.isRequired,
-        role: PropTypes.oneOf(['alert', 'listbox', 'menu', 'modal', 'popover', 'tooltip']),
-        scopeFocus: PropTypes.bool,
-    }
+const Context = React.createContext('overlay')
 
-    static defaultProps = {
-        component: 'div',
-        role: 'popover',
-    }
+export function withOverlay(options) {
+    return function(Component) {
+        class OverlayConsumer extends React.PureComponent {
+            static propTypes = {
+                closeById: PropTypes.func.isRequired,
+                forwardedRef: PropTypes.func,
+                freezeScroll: PropTypes.bool,
+                id: PropTypes.string,
+                onRequestClose: PropTypes.func,
+                openById: PropTypes.func.isRequired,
+                overlayId: PropTypes.string.isRequired,
+                overlayName: PropTypes.string.isRequired,
+                uniqueId: PropTypes.string.isRequired,
+            }
 
-    componentDidMount() {
-        this.prevFocusEl = document.activeElement
+            static defaultProps = {
+                freezeScroll: false,
+            }
 
-        if (this.props.scopeFocus) {
-            scope(this.node)
+            state = {}
+
+            static getDerivedStateFromProps(props, state) {
+                const id = getProp(props.id, props.uniqueId)
+
+                if (state.id !== id || props.freezeScroll !== state.freezeScroll) {
+                    return { freezeScroll: props.freezeScroll, id }
+                }
+
+                return null
+            }
+
+            componentDidMount() {
+                this.props.openById(this.state.id, this.state.freezeScroll)
+            }
+
+            componentDidUpdate(prevProps, prevState) {
+                if (this.state !== prevState) {
+                    this.props.closeById(prevState.id, prevState.freezeScroll)
+                    this.props.openById(this.state.id, this.state.freezeScroll)
+                }
+            }
+
+            componentWillUnmount() {
+                this.props.closeById(this.state.id, this.state.freezeScroll)
+            }
+
+            handleRequestClose = usingEscapeKey => {
+                if (this.props.onRequestClose) {
+                    this.props.onRequestClose(usingEscapeKey)
+                }
+            }
+
+            render() {
+                const { closeById, forwardedRef, freezeScroll, id, openById, uniqueId, ...props } = this.props
+
+                return (
+                    <Component
+                        {...props}
+                        id={this.state.id}
+                        onRequestClose={this.handleRequestClose}
+                        ref={forwardedRef}
+                    />
+                )
+            }
         }
 
-        document.addEventListener('click', this.onDocClick, true)
-        document.addEventListener('keydown', this.onDocKeyDown, true)
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('click', this.onDocClick, true)
-        document.removeEventListener('keydown', this.onDocKeyDown, true)
-
-        if (this.props.scopeFocus) {
-            unscope(this.node)
-        }
-
-        if (!this.props.noFocusRestore && document.activeElement === document.body) {
-            this.prevFocusEl.focus()
-        }
-    }
-
-    handleNode = node => {
-        if (this.props.scopeFocus && this.node && node) {
-            unscope(this.node)
-            scope(node)
-        }
-
-        this.node = node
-    }
-
-    onDocClick = event => {
-        if (
-            !this.props.noCloseOnBodyClick &&
-            !event.defaultPrevented &&
-            this.node &&
-            this.node !== event.target &&
-            !this.node.contains(event.target) &&
-            this.prevFocusEl !== event.target
-        ) {
-            event.preventDefault()
-            event.stopPropagation()
-            this.props.onRequestClose(false)
-        }
-    }
-
-    onDocKeyDown = event => {
-        if (!this.props.noCloseOnEscKey && !event.defaultPrevented && event.key === 'Escape') {
-            event.preventDefault()
-            this.props.onRequestClose(true)
-        }
-    }
-
-    render() {
-        const {
-            children,
-            component,
-            currentOverlayId,
-            getIndexById,
-            isOpenById,
-            noCloseOnBodyClick,
-            noCloseOnEscKey,
-            noFocusRestore,
-            onRequestClose,
-            providerId,
-            providerName,
-            scopeFocus,
-            ...props
-        } = this.props
-
-        if (typeof children === 'function') {
-            return children({ ...this.props, ref: this.handleNode })
-        }
-
-        return React.createElement(component, { ...props, ref: this.handleNode }, children)
+        return withUniqueId(options || {})(
+            React.forwardRef((props, ref) => (
+                <Context.Consumer>
+                    {overlayProps => <OverlayConsumer {...props} {...overlayProps} forwardedRef={ref} />}
+                </Context.Consumer>
+            )),
+        )
     }
 }
 
-export default withOverlay(Overlay)
+export default Context.Provider

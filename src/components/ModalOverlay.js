@@ -5,14 +5,14 @@ import noScroll from 'no-scroll'
 import { getProp, noop } from '../lib/utils'
 import { hidden } from '../lib/styles'
 
-import OverlayContext from './OverlayContext'
+import OverlayProvider from './Overlay'
 import { withUniqueId } from './UniqueId'
 
-class OverlayProvider extends React.PureComponent {
+class ModalOverlay extends React.PureComponent {
     static propTypes = {
         children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         id: PropTypes.string,
-        initialOverlayId: PropTypes.string,
+        initialModalId: PropTypes.string,
         name: PropTypes.string,
         noName: PropTypes.bool,
         onChange: PropTypes.func,
@@ -26,24 +26,24 @@ class OverlayProvider extends React.PureComponent {
         onOpen: noop,
     }
 
-    overlays = this.props.initialOverlayId ? [this.props.initialOverlayId] : []
+    modals = this.props.initialModalId ? [this.props.initialModalId] : []
     scrollFreezes = []
 
     state = {
-        currentOverlayId: getProp(this.props.initialOverlayId, ''),
+        currentModalId: getProp(this.props.initialModalId, ''),
     }
 
     value = {
-        closeById: overlayId => {
-            const index = this.overlays.indexOf(overlayId)
+        closeById: modalId => {
+            const index = this.modals.indexOf(modalId)
 
             if (index !== -1) {
-                this.overlays.splice(index, 1)
-                this.props.onClose(overlayId)
+                this.modals.splice(index, 1)
+                this.props.onClose(modalId)
                 this.setState({
-                    currentOverlayId: this.overlays.length ? this.overlays[this.overlays.length - 1] : '',
+                    currentModalId: this.modals.length ? this.modals[this.modals.length - 1] : '',
                 })
-                const freezeIndex = this.scrollFreezes.indexOf(overlayId)
+                const freezeIndex = this.scrollFreezes.indexOf(modalId)
 
                 if (freezeIndex !== -1) {
                     this.scrollFreezes.splice(freezeIndex, 1)
@@ -54,62 +54,62 @@ class OverlayProvider extends React.PureComponent {
                 }
             }
         },
-        getIndexById: overlayId => this.overlays.indexOf(overlayId),
-        isOpenById: overlayId => this.overlays.includes(overlayId),
-        openById: (overlayId, freezeScroll) => {
-            const index = this.overlays.indexOf(overlayId)
+        getIndexById: modalId => this.modals.indexOf(modalId),
+        isOpenById: modalId => this.modals.includes(modalId),
+        openById: (modalId, freezeScroll) => {
+            const index = this.modals.indexOf(modalId)
 
             if (index === -1) {
-                this.overlays.push(overlayId)
-                this.props.onOpen(overlayId)
+                this.modals.push(modalId)
+                this.props.onOpen(modalId)
 
                 if (freezeScroll) {
                     if (this.scrollFreezes.length === 0) {
                         noScroll.on()
                     }
 
-                    this.scrollFreezes.push(overlayId)
+                    this.scrollFreezes.push(modalId)
                 }
             }
 
-            if (this.state.currentOverlayId !== overlayId) {
-                this.setState({ currentOverlayId: overlayId })
+            if (this.state.currentModalId !== modalId) {
+                this.setState({ currentModalId: modalId })
             }
         },
     }
 
     render() {
-        const currentOverlayId = this.state.currentOverlayId
+        const currentModalId = this.state.currentModalId
         const id = getProp(this.props.id, this.props.uniqueId)
         const name = this.props.noName === true ? null : getProp(this.props.name, id)
         /**
          * Change object reference only if there are actual changes.
          */
         if (
-            this.value.currentOverlayId !== currentOverlayId ||
-            this.value.providerId !== id ||
-            this.value.providerName !== name
+            this.value.currentModalId !== currentModalId ||
+            this.value.overlayId !== id ||
+            this.value.overlayName !== name
         ) {
-            this.value = { ...this.value, currentOverlayId, providerId: id, providerName: name }
+            this.value = { ...this.value, currentModalId, overlayId: id, overlayName: name }
         }
 
         return (
-            <OverlayContext value={this.value}>
+            <OverlayProvider value={this.value}>
                 <input
-                    checked={currentOverlayId !== ''}
+                    checked={currentModalId !== ''}
                     id={id}
                     name={name}
                     onChange={this.props.onChange}
                     style={hidden}
                     type="checkbox"
-                    value={currentOverlayId}
+                    value={currentModalId}
                 />
                 {typeof this.props.children === 'function'
                     ? this.props.children({ ...this.value })
                     : this.props.children}
-            </OverlayContext>
+            </OverlayProvider>
         )
     }
 }
 
-export default withUniqueId(OverlayProvider, 'overlay-provider')
+export default withUniqueId({ identifier: 'modal-overlay' })(ModalOverlay)
