@@ -70,13 +70,18 @@ test('withUniqueId exposes ID generator for components when requested', () => {
         return (
             <ul>
                 {['a', 'b'].map((subId, index) => (
-                    <li key={index} id={uid.next(props.useSubId && subId)}>
-                        {`I am known as "${uid.last(props.useSubId && subId)}"`}
-                    </li>
+                    <React.Fragment key={index}>
+                        <li id={uid.next(props.useSubId && subId)}>
+                            {`I am known as "${uid.last(props.useSubId && subId)}"`}
+                        </li>
+                        {props.useSubId && <li id={uid.next(subId)}>{uid.last(subId)}</li>}
+                    </React.Fragment>
                 ))}
             </ul>
         )
     }
+
+    UniqComp.defaultProps = { useSubId: false }
 
     const Component = withUniqueId({ includeGenerator: true })(UniqComp)
     const Component2 = withUniqueId({ includeGenerator: false })(UniqComp)
@@ -90,8 +95,10 @@ test('withUniqueId exposes ID generator for components when requested', () => {
     // generator should allow extending the generated id with custom string
     tree.update(<Component useSubId />)
     expect(tree.root.findByProps({ id: 'maria-uid1.a1' }).children).toEqual(['I am known as "maria-uid1.a1"'])
+    expect(tree.root.findByProps({ id: 'maria-uid1.a2' }).children).toEqual(['maria-uid1.a2'])
     expect(tree.root.findByProps({ id: 'maria-uid1.b1' }).children).toEqual(['I am known as "maria-uid1.b1"'])
-    expect(uniqueIdSet.size).toEqual(3)
+    expect(tree.root.findByProps({ id: 'maria-uid1.b2' }).children).toEqual(['maria-uid1.b2'])
+    expect(uniqueIdSet.size).toEqual(5)
 
     // generator should also become available via a boolean flag
     // NOTE: componentWillUnmount of Component will be called after Component2's render, thus "maria-uid2"
