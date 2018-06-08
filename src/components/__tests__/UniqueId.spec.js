@@ -68,16 +68,16 @@ test('withUniqueId exposes ID generator for components when requested', () => {
         const uid = props.uniqueIdGen()
 
         return (
-            <ul>
+            <dl>
                 {['a', 'b'].map((subId, index) => (
                     <React.Fragment key={index}>
-                        <li id={uid.next(props.useSubId && subId)}>
-                            {`I am known as "${uid.last(props.useSubId && subId)}"`}
-                        </li>
-                        {props.useSubId && <li id={uid.next(subId)}>{uid.last(subId)}</li>}
+                        <dt id={uid.next()}>{`I am known as "${uid.last()}"`}</dt>
+                        <dd>I am here to make semantics right.</dd>
+                        {props.useSubId && <dd id={uid.next(subId)}>{uid.last(subId)}</dd>}
+                        {props.useSubId && <dd id={uid.next(subId)}>{uid.last(subId)}</dd>}
                     </React.Fragment>
                 ))}
-            </ul>
+            </dl>
         )
     }
 
@@ -94,11 +94,13 @@ test('withUniqueId exposes ID generator for components when requested', () => {
 
     // generator should allow extending the generated id with custom string
     tree.update(<Component useSubId />)
-    expect(tree.root.findByProps({ id: 'maria-uid1.a1' }).children).toEqual(['I am known as "maria-uid1.a1"'])
+    expect(tree.root.findByProps({ id: 'maria-uid1.1' }).children).toEqual(['I am known as "maria-uid1.1"'])
+    expect(tree.root.findByProps({ id: 'maria-uid1.a1' }).children).toEqual(['maria-uid1.a1'])
     expect(tree.root.findByProps({ id: 'maria-uid1.a2' }).children).toEqual(['maria-uid1.a2'])
-    expect(tree.root.findByProps({ id: 'maria-uid1.b1' }).children).toEqual(['I am known as "maria-uid1.b1"'])
+    expect(tree.root.findByProps({ id: 'maria-uid1.2' }).children).toEqual(['I am known as "maria-uid1.2"'])
+    expect(tree.root.findByProps({ id: 'maria-uid1.b1' }).children).toEqual(['maria-uid1.b1'])
     expect(tree.root.findByProps({ id: 'maria-uid1.b2' }).children).toEqual(['maria-uid1.b2'])
-    expect(uniqueIdSet.size).toEqual(5)
+    expect(uniqueIdSet.size).toEqual(7)
 
     // generator should also become available via a boolean flag
     // NOTE: componentWillUnmount of Component will be called after Component2's render, thus "maria-uid2"
