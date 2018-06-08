@@ -41,6 +41,7 @@ export function withUniqueId(options) {
             static propTypes = {
                 forwardedRef: PropTypes.any,
                 uniqueId: PropTypes.string,
+                uniqueIdGen: PropTypes.bool,
             }
 
             nextIds = {}
@@ -63,6 +64,7 @@ export function withUniqueId(options) {
             }
 
             componentWillUnmount() {
+                this.uniqueIdGen()
                 unregisterUniqueId(this.state.uniqueId)
             }
 
@@ -109,7 +111,7 @@ export function withUniqueId(options) {
                 const { forwardedRef, ...props } = this.props
                 const { uniqueId } = this.state
 
-                const uniqueIdGen = includeGenerator ? this.uniqueIdGen : null
+                const uniqueIdGen = (includeGenerator || this.props.uniqueIdGen) === true ? this.uniqueIdGen : null
 
                 return <Component {...props} ref={forwardedRef} uniqueId={uniqueId} uniqueIdGen={uniqueIdGen} />
             }
