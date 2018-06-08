@@ -1,5 +1,183 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`withUniqueId exposes ID generator for components when requested and does not get confused 1`] = `
+<dl
+  id="maria-uid1"
+>
+  <dt
+    id="maria-uid1.1"
+  >
+    I am known as "maria-uid1.1"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dt
+    id="maria-uid1.2"
+  >
+    I am known as "maria-uid1.2"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd />
+</dl>
+`;
+
+exports[`withUniqueId exposes ID generator for components when requested and does not get confused 2`] = `
+<dl
+  id="maria-uid1"
+>
+  <dt
+    id="maria-uid1.1"
+  >
+    I am known as "maria-uid1.1"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd
+    id="maria-uid1.a1"
+  >
+    maria-uid1.a1
+  </dd>
+  <dd
+    id="maria-uid1.a2"
+  >
+    maria-uid1.a2
+  </dd>
+  <dt
+    id="maria-uid1.2"
+  >
+    I am known as "maria-uid1.2"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd
+    id="maria-uid1.b1"
+  >
+    maria-uid1.b1
+  </dd>
+  <dd
+    id="maria-uid1.b2"
+  >
+    maria-uid1.b2
+  </dd>
+  <dd />
+</dl>
+`;
+
+exports[`withUniqueId exposes ID generator for components when requested and does not get confused 3`] = `
+<dl
+  id="maria-uid1"
+>
+  <dt
+    id="maria-uid1.1"
+  >
+    I am known as "maria-uid1.1"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd
+    id="maria-uid1.a1"
+  >
+    maria-uid1.a1
+  </dd>
+  <dd
+    id="maria-uid1.a2"
+  >
+    maria-uid1.a2
+  </dd>
+  <dt
+    id="maria-uid1.2"
+  >
+    I am known as "maria-uid1.2"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd
+    id="maria-uid1.b1"
+  >
+    maria-uid1.b1
+  </dd>
+  <dd
+    id="maria-uid1.b2"
+  >
+    maria-uid1.b2
+  </dd>
+  <dd>
+    <dl
+      id="test1"
+    >
+      <dt
+        id="test1.1"
+      >
+        I am known as "test1.1"
+      </dt>
+      <dd>
+        I am here to make semantics right.
+      </dd>
+      <dd
+        id="test1.a1"
+      >
+        test1.a1
+      </dd>
+      <dd
+        id="test1.a2"
+      >
+        test1.a2
+      </dd>
+      <dt
+        id="test1.2"
+      >
+        I am known as "test1.2"
+      </dt>
+      <dd>
+        I am here to make semantics right.
+      </dd>
+      <dd
+        id="test1.b1"
+      >
+        test1.b1
+      </dd>
+      <dd
+        id="test1.b2"
+      >
+        test1.b2
+      </dd>
+      <dd />
+    </dl>
+  </dd>
+</dl>
+`;
+
+exports[`withUniqueId exposes ID generator for components when requested and does not get confused 4`] = `
+<dl
+  id="maria-uid2"
+>
+  <dt
+    id="maria-uid2.1"
+  >
+    I am known as "maria-uid2.1"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dt
+    id="maria-uid2.2"
+  >
+    I am known as "maria-uid2.2"
+  </dt>
+  <dd>
+    I am here to make semantics right.
+  </dd>
+  <dd />
+</dl>
+`;
+
 exports[`withUniqueId throws when identifier is not HTML4 specced id string 1`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
 
 exports[`withUniqueId throws when identifier is not HTML4 specced id string 2`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
