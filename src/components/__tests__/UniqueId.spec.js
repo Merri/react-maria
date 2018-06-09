@@ -127,4 +127,8 @@ test('withUniqueId exposes ID generator for components when requested and does n
     expect(tree.root.findByProps({ id: 'maria-uid2.1' }).children).toEqual(['I am known as "maria-uid2.1"'])
     expect(tree.root.findByProps({ id: 'maria-uid2.2' }).children).toEqual(['I am known as "maria-uid2.2"'])
     expect(uniqueIdSet.size).toEqual(3)
+
+    // and should fail if not available
+    global.spyOn(console, 'error')
+    expect(() => tree.update(<Component2 />)).toThrowErrorMatchingSnapshot()
 })

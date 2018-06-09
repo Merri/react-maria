@@ -178,6 +178,8 @@ exports[`withUniqueId exposes ID generator for components when requested and doe
 </dl>
 `;
 
+exports[`withUniqueId exposes ID generator for components when requested and does not get confused 5`] = `"props.uniqueIdGen is not a function"`;
+
 exports[`withUniqueId throws when identifier is not HTML4 specced id string 1`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
 
 exports[`withUniqueId throws when identifier is not HTML4 specced id string 2`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
