@@ -7,25 +7,6 @@ avoiding problems like the universal rendering issue that exist in other similar
 
 These components will be built on top of the latest and greatest features in React, requiring React 16.4 or later.
 
-----
-
-
-## Current stable features
-
-There features are complete and *should* be safe to use in production:
-
-- Unique IDs
-
-
-## Current unstable features
-
-These features have not been tested properly or have issues that need to be fixed.
-
-- Overlays
-
-----
-
-
 ## Unique ID management for universal rendering
 
 These utilities allow making components that have no render conflicts between server and client, making it possible to
@@ -38,7 +19,7 @@ have unique id attributes in your rendered DOM elements.
 ```js
 // returns a component which is guaranteed to have uniqueId prop that is truly
 // unique on rendered React app (first uniqueId: 'my-component1')
-export default withUniqueId(MyComponent, 'my-component')
+export default withUniqueId({ identifier: 'my-component' })(MyComponent)
 ```
 
 It is recommended that you do **not** use numbers in your manually written id attributes to avoid any possible chance
