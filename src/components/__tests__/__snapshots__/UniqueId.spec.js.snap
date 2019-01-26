@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withUniqueId exposes ID generator for components when requested and does not get confused 1`] = `
+exports[`withUniqueId exposes ID generator for components 1`] = `
 <dl
   id="maria-uid1"
 >
@@ -24,7 +24,7 @@ exports[`withUniqueId exposes ID generator for components when requested and doe
 </dl>
 `;
 
-exports[`withUniqueId exposes ID generator for components when requested and does not get confused 2`] = `
+exports[`withUniqueId exposes ID generator for components 2`] = `
 <dl
   id="maria-uid1"
 >
@@ -68,7 +68,7 @@ exports[`withUniqueId exposes ID generator for components when requested and doe
 </dl>
 `;
 
-exports[`withUniqueId exposes ID generator for components when requested and does not get confused 3`] = `
+exports[`withUniqueId exposes ID generator for components 3`] = `
 <dl
   id="maria-uid1"
 >
@@ -153,32 +153,6 @@ exports[`withUniqueId exposes ID generator for components when requested and doe
   </dd>
 </dl>
 `;
-
-exports[`withUniqueId exposes ID generator for components when requested and does not get confused 4`] = `
-<dl
-  id="maria-uid2"
->
-  <dt
-    id="maria-uid2.1"
-  >
-    I am known as "maria-uid2.1"
-  </dt>
-  <dd>
-    I am here to make semantics right.
-  </dd>
-  <dt
-    id="maria-uid2.2"
-  >
-    I am known as "maria-uid2.2"
-  </dt>
-  <dd>
-    I am here to make semantics right.
-  </dd>
-  <dd />
-</dl>
-`;
-
-exports[`withUniqueId exposes ID generator for components when requested and does not get confused 5`] = `"props.uniqueIdGen is not a function"`;
 
 exports[`withUniqueId throws when identifier is not HTML4 specced id string 1`] = `"[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter"`;
 

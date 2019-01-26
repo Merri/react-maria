@@ -54,7 +54,7 @@ test('withUniqueId acts as a HoC for components', () => {
 
     const tree = renderer.create(<Component />)
     expect(data.props.uniqueId).toEqual('maria-uid1')
-    expect(data.props.uniqueIdGen).toBeNull()
+    expect(typeof data.props.uniqueIdGen).toBe('function')
     // allow setting base identifier via props as well
     tree.update(<Component uniqueId="test" />)
     expect(data.props.uniqueId).toEqual('test1')
@@ -63,7 +63,7 @@ test('withUniqueId acts as a HoC for components', () => {
     expect(data.props.uniqueId).toEqual('maria-uid1')
 })
 
-test('withUniqueId exposes ID generator for components when requested and does not get confused', () => {
+test('withUniqueId exposes ID generator for components', () => {
     const UniqComp = props => {
         const uid = props.uniqueIdGen()
 
@@ -84,8 +84,7 @@ test('withUniqueId exposes ID generator for components when requested and does n
 
     UniqComp.defaultProps = { useSubId: false }
 
-    const Component = withUniqueId({ includeGenerator: true })(UniqComp)
-    const Component2 = withUniqueId({ includeGenerator: false })(UniqComp)
+    const Component = withUniqueId()(UniqComp)
 
     // generator should be available
     const tree = renderer.create(<Component />)
@@ -119,16 +118,4 @@ test('withUniqueId exposes ID generator for components when requested and does n
     expect(tree.root.findByProps({ id: 'test1.b1' }).children).toEqual(['test1.b1'])
     expect(tree.root.findByProps({ id: 'test1.b2' }).children).toEqual(['test1.b2'])
     expect(uniqueIdSet.size).toEqual(14)
-
-    // generator should also become available via a boolean flag
-    tree.update(<Component2 uniqueIdGen />)
-    expect(tree.toJSON()).toMatchSnapshot()
-    // NOTE: componentWillUnmount of Component will be called after Component2's render, thus "maria-uid2"
-    expect(tree.root.findByProps({ id: 'maria-uid2.1' }).children).toEqual(['I am known as "maria-uid2.1"'])
-    expect(tree.root.findByProps({ id: 'maria-uid2.2' }).children).toEqual(['I am known as "maria-uid2.2"'])
-    expect(uniqueIdSet.size).toEqual(3)
-
-    // and should fail if not available
-    global.spyOn(console, 'error')
-    expect(() => tree.update(<Component2 />)).toThrowErrorMatchingSnapshot()
 })

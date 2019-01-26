@@ -5,7 +5,10 @@ module.exports = {
         "import/extensions": [
             ".js",
             ".jsx"
-        ]
+        ],
+        "react": {
+            "version": "detect"
+        }
     },
     "rules": {
         "semi": [
