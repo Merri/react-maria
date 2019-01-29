@@ -1,4 +1,4 @@
-# Unique IDs
+## Unique IDs
 
 React does not provide native means to ensure generation of unique IDs to use with HTML input components. This means
 that making dynamically generated IDs for label `htmlFor` and input `id` attributes needs a lot of thinking to get it
@@ -47,7 +47,7 @@ first call. Likewise, `uid.last('car')` will return this same ID.
 will cause issues and a danger of duplicate IDs. You may however pass the result from `getMariaIdTools()` to other
 components as a prop during your component's render.
 
-## Unique IDs in the server side
+### Unique IDs in the server side
 
 Right after (or right before) rendering static HTML in server side you must call `clearUniqueIds`: otherwise server and
 client generated IDs will get unsynced.
@@ -63,3 +63,27 @@ export function getHtml(app) {
     return html
 }
 ```
+
+### Why Maria implements unique IDs?
+
+React does not provide anything for this issue, see [RFC #32: isomorphic IDs](https://github.com/reactjs/rfcs/pull/32).
+There are other solutions to this problem, but...
+
+**... they have no universal render**:
+
+- [`react-id-decorator`](https://www.npmjs.com/package/react-id-decorator)
+- [`react-sequential-id`](https://www.npmjs.com/package/react-sequential-id)
+- [`react-stable-uniqueid`](https://www.npmjs.com/package/react-stable-uniqueid)
+- [`react-uniqueid`](https://www.npmjs.com/package/react-uniqueid)
+- [`@team-griffin/react-unique-id`](https://www.npmjs.com/package/@team-griffin/react-unique-id)
+
+**... or they mutate your component like a mixin (antipattern)**:
+
+- [`react-html-id`](https://www.npmjs.com/package/react-html-id)
+
+**... or they have no documentation at all**:
+
+- [`@xo-union/react-unique-id`](https://www.npmjs.com/package/@xo-union/react-unique-id)
+
+And the remaining solutions that can be found have clearly not spent time to think about the problem or the
+implementation is based on outdated React features (like mixins).

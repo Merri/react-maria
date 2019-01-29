@@ -7,50 +7,17 @@ avoiding problems like the universal rendering issue that exist in other similar
 
 These components will be built on top of the latest and greatest features in React, requiring React 16.4 or later.
 
-## Unique ID management for universal rendering
 
-These utilities allow making components that have no render conflicts between server and client, making it possible to
-have unique id attributes in your rendered DOM elements.
+## Stable features as of v0.1.0
 
-- `clearUniqueIds`: call before rendering static markup on server side to ensure client will use same uniqueIds
-- `registerUniqueId` and `unregisterUniqueId`: if you want a custom `withUniqueId` implementation
-- `withUniqueId`: HOC that gives `uniqueId` prop to a given component
+These features are "mature" and are unlikely to be changed greatly from now on. Full 100% test coverage.
 
-```js
-// returns a component which is guaranteed to have uniqueId prop that is truly
-// unique on rendered React app (first uniqueId: 'my-component1')
-export default withUniqueId({ identifier: 'my-component' })(MyComponent)
-```
-
-It is recommended that you do **not** use numbers in your manually written id attributes to avoid any possible chance
-for a conflict. The generated unique ids end with a number.
-
-### Why Maria implements `withUniqueId`?
-
-React does not provide anything for this issue, see [RFC #32: isomorphic IDs](https://github.com/reactjs/rfcs/pull/32).
-There are other solutions to this problem, but...
-
-**... they have no universal render**:
-
-- [`react-id-decorator`](https://www.npmjs.com/package/react-id-decorator)
-- [`react-sequential-id`](https://www.npmjs.com/package/react-sequential-id)
-- [`react-stable-uniqueid`](https://www.npmjs.com/package/react-stable-uniqueid)
-- [`react-uniqueid`](https://www.npmjs.com/package/react-uniqueid)
-- [`@team-griffin/react-unique-id`](https://www.npmjs.com/package/@team-griffin/react-unique-id)
-
-**... or they mutate your component like a mixin (antipattern)**:
-
-- [`react-html-id`](https://www.npmjs.com/package/react-html-id)
-
-**... or they have no documentation at all**:
-
-- [`@xo-union/react-unique-id`](https://www.npmjs.com/package/@xo-union/react-unique-id)
-
-And the remaining solutions that can be found have clearly not spent time to think about the problem or the
-implementation is based on outdated React features (like mixins).
+- [Unique IDs](https://github.com/Merri/react-maria/tree/master/docs): `withUniqueId` HOC, `getMariaIdTools()` etc.
 
 
-## Components
+## Unstable features: Components
+
+These features have not yet had the care and time to be anywhere near final: no docs, no tests, likely to change a lot.
 
 ### Overlays: for dialogs, dropdowns, popups, tooltips...
 - `Modal`: for any component that pops on top of regular content, be it list dropdown or full screen modal dialog
@@ -60,3 +27,4 @@ implementation is based on outdated React features (like mixins).
 ### Todo thoughts
 - `Accordion`
 - `Tabs`
+- Actually make use of Storybook
