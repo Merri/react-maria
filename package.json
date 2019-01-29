@@ -1,7 +1,7 @@
 {
   "name": "react-maria",
   "description": "Unique IDs, ARIA state management and components for React",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "Vesa Piittinen <vesa.piittinen@gmail.com>",
   "bugs": {
     "url": "https://github.com/merri/react-maria/issues"
