@@ -29,90 +29,89 @@ const html4Id = /^[A-Za-z]+[\w\-:.]*$/
 export function withUniqueId(options) {
     const { identifier = 'maria-uid' } = options || {}
 
-    // eslint-disable-next-line no-undef
-    if (process.env.NODE_ENV !== 'production') {
-        if (identifier == null || !html4Id.test(identifier)) {
-            throw new Error('[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter')
-        }
+    if (identifier == null || !html4Id.test(identifier)) {
+        throw new Error('[withUniqueId] identifier must be a HTML4 compatible id string starting with ASCII letter')
     }
 
     return function(Component) {
         class UniqueId extends React.PureComponent {
             static propTypes = {
                 forwardedRef: PropTypes.any,
-                uniqueId: PropTypes.string,
+                id: PropTypes.string,
             }
 
-            nextIds = {}
-            state = {
-                uniqueId: registerUniqueId(this.props.uniqueId != null ? this.props.uniqueId : identifier),
-                uniqueIdProps: this.props.uniqueId,
-            }
-
-            static getDerivedStateFromProps(props, state) {
-                if (state.uniqueIdProps === props.uniqueId) {
-                    return null
-                }
-
-                unregisterUniqueId(state.uniqueId)
-
-                return {
-                    uniqueId: registerUniqueId(props.uniqueId != null ? props.uniqueId : identifier),
-                    uniqueIdProps: props.uniqueId,
-                }
-            }
+            currentId = this.props.id
+            id = registerUniqueId(this.props.id != null ? this.props.id : identifier)
+            // storage for ids generated in components during render using next() or make()
+            renderIds = {}
 
             componentWillUnmount() {
-                this.uniqueIdGen()
-                unregisterUniqueId(this.state.uniqueId)
+                this.removeRenderGeneratedIds()
+                unregisterUniqueId(this.id)
             }
 
-            lastUniqueId = id => {
+            lastUid = id => {
                 const key = typeof id === 'string' ? id : ''
-                const array = this.nextIds[key]
+                const array = this.renderIds[key]
 
                 return (Array.isArray(array) && array[array.length - 1]) || null
             }
 
-            nextUniqueId = id => {
+            makeUids = ids => {
+                if (Array.isArray(ids)) return ids.map(this.nextUid)
+                if (ids == null || typeof ids !== 'object') return null
+
+                return Object.keys(ids).reduce((output, key) => {
+                    output[key] = this.nextUid(ids[key])
+                    return output
+                }, {})
+            }
+
+            nextUid = id => {
                 const key = typeof id === 'string' ? id : ''
-                const uniqueId = registerUniqueId(`${this.state.uniqueId}.${key}`)
-
-                if (!Array.isArray(this.nextIds[key])) {
-                    this.nextIds[key] = []
-                }
-
-                this.nextIds[key].push(uniqueId)
+                if (!Array.isArray(this.renderIds[key])) this.renderIds[key] = []
+                const uniqueId = registerUniqueId(`${this.id}.${key}`)
+                this.renderIds[key].push(uniqueId)
                 return uniqueId
             }
 
-            generator = Object.defineProperty(Object.defineProperty({}, 'last', { value: this.lastUniqueId }), 'next', {
-                value: this.nextUniqueId,
-            })
+            tools = [['last', this.lastUid], ['make', this.makeUids], ['next', this.nextUid]].reduce(
+                (output, pair) => Object.defineProperty(output, pair[0], { value: pair[1] }),
+                {},
+            )
 
-            uniqueIdGen = () => {
-                const keys = Object.keys(this.nextIds)
+            getMariaIdTools = () => {
+                this.removeRenderGeneratedIds()
+                return this.tools
+            }
+
+            removeRenderGeneratedIds = () => {
+                const keys = Object.keys(this.renderIds)
 
                 for (let j = 0; j < keys.length; j++) {
                     const key = keys[j]
 
-                    if (this.nextIds[key].length === 0) {
-                        delete this.nextIds[key]
+                    // perf: only delete if not being used in two consecutive renders
+                    if (this.renderIds[key].length === 0) {
+                        delete this.renderIds[key]
                     } else {
-                        while (this.nextIds[key].length) {
-                            unregisterUniqueId(this.nextIds[key].pop())
+                        while (this.renderIds[key].length) {
+                            unregisterUniqueId(this.renderIds[key].pop())
                         }
                     }
                 }
-
-                return this.generator
             }
 
             render() {
-                const { forwardedRef, ...props } = this.props
-                const { uniqueId } = this.state
+                const { forwardedRef, id, ...props } = this.props
 
-                return <Component {...props} ref={forwardedRef} uniqueId={uniqueId} uniqueIdGen={this.uniqueIdGen} />
+                if (id !== this.currentId) {
+                    unregisterUniqueId(this.id)
+                    this.currentId = id
+                    this.id = registerUniqueId(id != null ? id : identifier)
+                }
+
+                return <Component {...props} ref={forwardedRef} id={this.id} getMariaIdTools={this.getMariaIdTools} />
             }
         }
         // eslint-disable-next-line react/display-name,react/no-multi-comp

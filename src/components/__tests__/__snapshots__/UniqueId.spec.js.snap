@@ -1,6 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withUniqueId exposes ID generator for components 1`] = `
+exports[`withUniqueId exposes getMariaIdTools with \`make\` for components 1`] = `
+<ul
+  id="maria-uid1"
+>
+  <li
+    id="maria-uid1.yksi1"
+  >
+    Make from array: 
+    maria-uid1.yksi1
+  </li>
+  <li
+    id="maria-uid1.kaksi1"
+  >
+    Make from array: 
+    maria-uid1.kaksi1
+  </li>
+  <li
+    id="maria-uid1.yksi2"
+  >
+    Make from object ONE: 
+    maria-uid1.yksi2
+  </li>
+  <li
+    id="maria-uid1.kaksi2"
+  >
+    Make from object TWO: 
+    maria-uid1.kaksi2
+  </li>
+</ul>
+`;
+
+exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 1`] = `
 <dl
   id="maria-uid1"
 >
@@ -24,7 +55,7 @@ exports[`withUniqueId exposes ID generator for components 1`] = `
 </dl>
 `;
 
-exports[`withUniqueId exposes ID generator for components 2`] = `
+exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 2`] = `
 <dl
   id="maria-uid1"
 >
@@ -68,7 +99,7 @@ exports[`withUniqueId exposes ID generator for components 2`] = `
 </dl>
 `;
 
-exports[`withUniqueId exposes ID generator for components 3`] = `
+exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 3`] = `
 <dl
   id="maria-uid1"
 >
