@@ -7,6 +7,16 @@ avoiding problems like the universal rendering issue that exist in other similar
 
 These components will be built on top of the latest and greatest features in React, requiring React 16.4 or later.
 
+```js
+npm install react-maria
+
+import { withUniqueId } from 'react-maria'
+
+export default withUniqueId()(MyComponent)
+// or...
+export default withUniqueId({ identifier: 'my-component' })(MyComponent)
+```
+
 
 ## Stable features as of v0.1.0
 
