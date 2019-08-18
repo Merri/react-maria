@@ -16,6 +16,6 @@ module.exports = {
             "never"
         ],
         "import/extensions": ["error", "always", { "js": "never", "jsx": "never" }],
-        "react/jsx-boolean-value": "never"
+        "react/jsx-boolean-value": 0
     }
 }
