@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withUniqueId exposes getMariaIdTools with \`make\` for components 1`] = `
+exports[`withUniqueId exposes uniqueId with \`make\` for components 1`] = `
 <ul
   id="maria-uid1"
 >
@@ -31,7 +31,7 @@ exports[`withUniqueId exposes getMariaIdTools with \`make\` for components 1`] =
 </ul>
 `;
 
-exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 1`] = `
+exports[`withUniqueId exposes uniqueId with \`next\` and \`last\` for components 1`] = `
 <dl
   id="maria-uid1"
 >
@@ -55,7 +55,7 @@ exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for com
 </dl>
 `;
 
-exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 2`] = `
+exports[`withUniqueId exposes uniqueId with \`next\` and \`last\` for components 2`] = `
 <dl
   id="maria-uid1"
 >
@@ -99,7 +99,7 @@ exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for com
 </dl>
 `;
 
-exports[`withUniqueId exposes getMariaIdTools with \`next\` and \`last\` for components 3`] = `
+exports[`withUniqueId exposes uniqueId with \`next\` and \`last\` for components 3`] = `
 <dl
   id="maria-uid1"
 >

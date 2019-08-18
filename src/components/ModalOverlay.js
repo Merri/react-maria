@@ -14,11 +14,9 @@ class ModalOverlay extends React.PureComponent {
         id: PropTypes.string,
         initialModalId: PropTypes.string,
         name: PropTypes.string,
-        noName: PropTypes.bool,
         onChange: PropTypes.func,
         onClose: PropTypes.func,
         onOpen: PropTypes.func,
-        uniqueId: PropTypes.string.isRequired,
     }
 
     static defaultProps = {
@@ -80,8 +78,8 @@ class ModalOverlay extends React.PureComponent {
 
     render() {
         const currentModalId = this.state.currentModalId
-        const id = getProp(this.props.id, this.props.uniqueId)
-        const name = this.props.noName === true ? null : getProp(this.props.name, id)
+        const { id } = this.props
+        const name = this.props.name === null ? null : getProp(this.props.name, id)
         /**
          * Change object reference only if there are actual changes.
          */

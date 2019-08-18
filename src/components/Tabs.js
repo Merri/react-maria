@@ -13,14 +13,13 @@ class Tabs extends React.PureComponent {
         accordion: PropTypes.oneOf(['multiple', 'toggle']),
         children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         component: PropTypes.any,
-        id: PropTypes.string,
+        uniqueId: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
         initialPanels: PropTypes.array,
         name: PropTypes.string,
         onChange: PropTypes.func,
         onPanels: PropTypes.func,
         panels: PropTypes.array,
-        uniqueId: PropTypes.string.isRequired,
-        uniqueIdGen: PropTypes.string.isRequired,
     }
 
     static defaultProps = { component: 'div', initialPanels: [] }
@@ -29,8 +28,7 @@ class Tabs extends React.PureComponent {
     panelIds = []
 
     state = {
-        id: getProp(this.props.id, this.props.uniqueId),
-        name: getProp(this.props.name, this.props.uniqueId),
+        name: getProp(this.props.name, this.props.id),
         panels: getProp(this.props.panels, this.props.initialPanels),
     }
 
@@ -52,13 +50,11 @@ class Tabs extends React.PureComponent {
     }
 
     render() {
-        const { children, component, uniqueId, ...rest } = this.props
+        const { children, component, ...props } = this.props
 
         if (this.value.name !== this.state.name) {
             this.value = { ...this.value, name: this.state.name }
         }
-
-        const props = { ...rest, id: this.state.id }
 
         return (
             <Context.Provider value={this.value}>
@@ -70,4 +66,4 @@ class Tabs extends React.PureComponent {
     }
 }
 
-export default withUniqueId({ identifier: 'maria-tabs', includeGenerator: true })(Tabs)
+export default withUniqueId({ identifier: 'maria-tabs' })(Tabs)

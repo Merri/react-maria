@@ -22,7 +22,7 @@ export default withUniqueId({ identifier: 'my-component' })(MyComponent)
 
 These features are "mature" and are unlikely to be changed greatly from now on. Full 100% test coverage.
 
-- [Unique IDs](https://github.com/Merri/react-maria/tree/master/docs): `withUniqueId` HOC, `getMariaIdTools()` etc.
+- [Unique IDs](https://github.com/Merri/react-maria/tree/master/docs): `withUniqueId` HOC, `uniqueId()` etc.
 
 
 ## Unstable features: Components

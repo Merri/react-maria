@@ -33,7 +33,7 @@ export class TabPanel extends React.PureComponent {
 export default function TabPanelContainer(props) {
     return (
         <TabsConsumer>
-            {({ uniqueIdGen, ...tab }) => <TabPanel {...props} id={uniqueIdGen().next('panel')} tab={tab} />}
+            {({ uniqueId, ...tab }) => <TabPanel {...props} id={uniqueId().next('panel')} tab={tab} />}
         </TabsConsumer>
     )
 }

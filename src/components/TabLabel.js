@@ -41,7 +41,7 @@ export class TabLabel extends React.PureComponent {
 export default function TabLabelContainer(props) {
     return (
         <TabsConsumer>
-            {({ uniqueIdGen, ...tab }) => <TabLabel {...props} id={uniqueIdGen().next('label')} tab={tab} />}
+            {({ uniqueId, ...tab }) => <TabLabel {...props} id={uniqueId().next('label')} tab={tab} />}
         </TabsConsumer>
     )
 }

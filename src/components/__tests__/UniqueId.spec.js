@@ -57,7 +57,7 @@ test('withUniqueId acts as a HoC for components', () => {
 
     const tree = renderer.create(<Component />)
     expect(data.props.id).toEqual('maria-uid1')
-    expect(typeof data.props.getMariaIdTools).toBe('function')
+    expect(typeof data.props.uniqueId).toBe('function')
     // allow setting base identifier via props as well
     tree.update(<Component id="test" />)
     expect(data.props.id).toEqual('test1')
@@ -66,9 +66,9 @@ test('withUniqueId acts as a HoC for components', () => {
     expect(data.props.id).toEqual('maria-uid1')
 })
 
-test('withUniqueId exposes getMariaIdTools with `next` and `last` for components', () => {
+test('withUniqueId exposes uniqueId with `next` and `last` for components', () => {
     const UniqComp = props => {
-        const uid = props.getMariaIdTools()
+        const uid = props.uniqueId()
 
         // coverage
         if (uid.last() != null) throw new Error('calling `last` before `next` should return null')
@@ -127,9 +127,9 @@ test('withUniqueId exposes getMariaIdTools with `next` and `last` for components
     expect(uniqueIdSet.size).toEqual(14)
 })
 
-test('withUniqueId exposes getMariaIdTools with `make` for components', () => {
+test('withUniqueId exposes uniqueId with `make` for components', () => {
     const UniqComp = props => {
-        const uid = props.getMariaIdTools()
+        const uid = props.uniqueId()
 
         // coverage
         if (uid.make(null) != null) throw new Error('null to `make` should return null')

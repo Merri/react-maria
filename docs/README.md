@@ -17,7 +17,7 @@ function MyComponent({ id }) {
 export default withUniqueId({ identifier: 'my-component' })(MyComponent)
 ```
 
-With this code in place your component will receive two new props: `id` and `getMariaIdTools`. The first one can be used
+With this code in place your component will receive two new props: `id` and `uniqueId`. The first one can be used
 directly with one element and is guaranteed to have a unique ID that has a running number added after the defined
 `identifier`.
 
@@ -25,14 +25,14 @@ You can render this component as many times as you want: React Maria guards thin
 no duplicate IDs - as long as you use the provided API to generate the IDs! And there is more API than just `id`:
 
 ```jsx
-function MyComponent({ id, getMariaIdTools }) {
-    const uid = getMariaIdTools()
+function MyComponent({ id, uniqueId }) {
+    const uid = uniqueId()
 
     return <div id={id}>My ID: {id} and my another ID: {uid.next()}</div>
 }
 ```
 
-In render you can do `const uid = getMariaIdTools()` to start generating more sub-IDs for the current `uniqueId`, thus
+In render you can do `const uid = uniqueId()` to start generating more sub-IDs for the current `uniqueId`, thus
 allowing more than one element to have unique ID within the same render. The returned `uid` has three methods: `next()`,
 `last()` and `make()`:
 
@@ -43,8 +43,8 @@ allowing more than one element to have unique ID within the same render. The ret
 You can also give additional identifier to next and last: `uid.next('car')` will generate id `my-component1.car1` upon
 first call. Likewise, `uid.last('car')` will return this same ID.
 
-**Call `getMariaIdTools()` only once, only in a component's render and do NOT pass it further to the subtree!** This
-will cause issues and a danger of duplicate IDs. You may however pass the result from `getMariaIdTools()` to other
+**Call `uniqueId()` only once, only in a component's render and do NOT pass it further to the subtree!** This
+will cause issues and a danger of duplicate IDs. You may however pass the result from `uniqueId()` to other
 components as a prop during your component's render.
 
 ### Unique IDs in the server side

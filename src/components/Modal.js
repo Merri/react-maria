@@ -83,6 +83,10 @@ class Modal extends React.PureComponent {
     }
 
     render() {
+        if (typeof this.props.children === 'function') {
+            return this.props.children({ ...this.props, ref: this.handleNode })
+        }
+
         const {
             children,
             component,
@@ -98,10 +102,6 @@ class Modal extends React.PureComponent {
             scopeFocus,
             ...props
         } = this.props
-
-        if (typeof children === 'function') {
-            return children({ ...this.props, ref: this.handleNode })
-        }
 
         return React.createElement(component, { ...props, ref: this.handleNode }, children)
     }

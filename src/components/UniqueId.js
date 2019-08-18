@@ -80,7 +80,7 @@ export function withUniqueId(options) {
                 {},
             )
 
-            getMariaIdTools = () => {
+            uniqueId = () => {
                 this.removeRenderGeneratedIds()
                 return this.tools
             }
@@ -111,7 +111,7 @@ export function withUniqueId(options) {
                     this.id = registerUniqueId(id != null ? id : identifier)
                 }
 
-                return <Component {...props} ref={forwardedRef} id={this.id} getMariaIdTools={this.getMariaIdTools} />
+                return <Component {...props} ref={forwardedRef} id={this.id} uniqueId={this.uniqueId} />
             }
         }
         // eslint-disable-next-line react/display-name,react/no-multi-comp
